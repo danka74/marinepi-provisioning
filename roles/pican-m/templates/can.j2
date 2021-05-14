@@ -1,0 +1,6 @@
+auto {{ mcp2515_can_device }}
+iface {{ mcp2515_can_device }} inet manual
+        pre-up /sbin/ip link set {{ mcp2515_can_device }} type can bitrate {{ mcp2515_bitrate }}
+        up /sbin/ifconfig {{ mcp2515_can_device }} up
+        down  down /sbin/ifconfig {{ mcp2515_can_device }} down
+

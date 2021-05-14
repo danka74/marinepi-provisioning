@@ -1,0 +1,19 @@
+---
+- name: Setup MCP2515 can device
+  blockinfile:
+    path: /boot/config.txt
+    block: |
+      enable_uart=1
+      dtoverlay=mcp2515-{{ mcp2515_overlay_can_device }},oscillator={{ mcp2515_oscillator_freq }},interrupt={{ mcp2515_int_pin }}
+      dtoverlay=spi-bcm2835-overlay
+  notify: reboot
+
+- name: Setup a CAN device
+  template:
+    src: can.j2
+    dest: /etc/network/interfaces.d/{{ mcp2515_can_device }}
+    mode: '0644'
+  notify: reboot
+
+- name: Install can-utils
+  apt: pkg=can-utils state=latest
