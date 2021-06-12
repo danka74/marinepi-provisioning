@@ -59,6 +59,7 @@
     - wavemon
     - telnet
     - speedtest-cli
+    - i2c-tools
   notify: reboot
 
 - name: Autoremove any unused packages
