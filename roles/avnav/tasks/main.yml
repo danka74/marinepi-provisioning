@@ -33,6 +33,19 @@
     state: latest
     pkg:
       - avnav
-      - avnav-raspi
+      - avnav-history-plugin
       - avnav-update-plugin
       - avnav-ocharts-plugin
+      - avnav-oesenc
+      - avnav-mapproxy-plugin	
+
+- name: Update AvNav settings
+  blockinfile:
+    path: /var/lib/avnav/avnav_server.xml
+    block: |
+      <builtin-signalk port="80" enabled="true"/>
+
+- name: Restart AvNav
+  ansible.builtin.systemd:
+    state: restarted
+    name: avnav

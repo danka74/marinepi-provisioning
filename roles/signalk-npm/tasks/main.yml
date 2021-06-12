@@ -99,6 +99,16 @@
     notify: restart-signalk-server
     tags: signalk-npm
 
+  - name: "Copy Custom SignalK base deltas"
+    copy:
+      src: "{{ signalk_base_delta_file }}"
+      dest: "/home/{{ signalk_user }}/.signalk/baseDeltas.json"
+      mode: 0644
+    become_user: "{{ signalk_user }}"
+    when: signalk_base_delta_file is defined
+    notify: restart-signalk-server
+    tags: signalk-npm
+
   - name: "Install SignalK server plugins"
     include:
       file: install_plugin.yml

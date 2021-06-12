@@ -1,0 +1,9 @@
+{
+  "configuration": {
+    "rate": 60,
+    "path": "inside",
+    "i2c_bus": 1,
+    "i2c_address": "0x76"
+  },
+  "enabled": true
+}

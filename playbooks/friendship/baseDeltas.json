@@ -1,0 +1,28 @@
+[
+  {
+    "context": "vessels.self",
+    "updates": [
+      {
+        "values": [
+          {
+            "path": "",
+            "value": {
+              "name": "Friendship",
+              "mmsi": "265641690",
+              "communication": {
+                "callsignVhf": "SA4667"
+              }
+            }
+          },
+          {
+            "path": "design.aisShipType",
+            "value": {
+              "name": "Sailing",
+              "id": 36
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
