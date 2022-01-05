@@ -1,0 +1,4 @@
+---
+avnav_user: pi
+avnav_user_group: pi
+path_to_avnav_server: /usr/bin/avnav

@@ -37,13 +37,22 @@
       - avnav-update-plugin
       - avnav-ocharts-plugin
       - avnav-oesenc
-      - avnav-mapproxy-plugin	
+      - avnav-mapproxy-plugin
 
-- name: Update AvNav settings
-  blockinfile:
-    path: /var/lib/avnav/avnav_server.xml
-    block: |
-      <builtin-signalk port="80" enabled="true"/>
+- name: "Setup AvNav server systemd service"
+  template:
+    src: avnav.service.j2
+    dest: /etc/systemd/system/avnav.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart-avnav-server
+
+- name: "Copy AvNav settings file"
+  copy:
+    src: "avnav_server.xml"
+    dest: "/home/{{ avnav_user }}/avnav/avnav_server.xml"
+    mode: 0644
 
 - name: Restart AvNav
   ansible.builtin.systemd:

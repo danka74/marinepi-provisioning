@@ -60,6 +60,7 @@
     - telnet
     - speedtest-cli
     - i2c-tools
+    - sysstat
   notify: reboot
 
 - name: Autoremove any unused packages

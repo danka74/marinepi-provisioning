@@ -1,7 +1,67 @@
 {
-  "pipedProviders": [],
-  "interfaces": {},
+  "pipedProviders": [
+    {
+      "pipeElements": [
+        {
+          "type": "providers/simple",
+          "options": {
+            "logging": false,
+            "type": "NMEA2000",
+            "subOptions": {
+              "type": "canbus-canboatjs",
+              "interface": "can0",
+              "uniqueNumber": 1717801
+            }
+          }
+        }
+      ],
+      "id": "can0",
+      "enabled": true
+    },
+    {
+      "pipeElements": [
+        {
+          "type": "providers/simple",
+          "options": {
+            "logging": false,
+            "type": "NMEA0183",
+            "subOptions": {
+              "suppress0183event": true,
+              "validateChecksum": true,
+              "type": "udp",
+              "port": "34568",
+              "sentenceEvent": "nmea1data"
+            }
+          }
+        }
+      ],
+      "id": "nmea0183socket",
+      "enabled": true
+    }
+  ],
+  "interfaces": {
+    "applicationData": true,
+    "appstore": true,
+    "logfiles": true,
+    "nmea-tcp": true,
+    "playground": true,
+    "plugins": true,
+    "providers": true,
+    "rest": true,
+    "tcp": true,
+    "webapps": true,
+    "ws": true
+  },
   "security": {
     "strategy": "./tokensecurity"
-  }
+  },
+  "mdns": true,
+  "ssl": false,
+  "wsCompression": false,
+  "enablePluginLogging": true,
+  "port": 80,
+  "sslport": 3443,
+  "pruneContextsMinutes": 60,
+  "keepMostRecentLogsOnly": false,
+  "logCountToKeep": 24
 }

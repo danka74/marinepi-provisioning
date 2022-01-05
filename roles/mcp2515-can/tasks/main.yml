@@ -3,7 +3,14 @@
   lineinfile:
     dest=/boot/config.txt
     regexp='^dtoverlay=mcp2515-{{ mcp2515_overlay_can_device }}'
-    line="dtoverlay=mcp2515-{{ mcp2515_overlay_can_device }},oscillator={{ mcp2515_oscillator_freq }},interrupt={{ mcp2515_int_pin }}"
+    line="dtoverlay=mcp2515-{{ mcp2515_overlay_can_device }},oscillator={{ mcp2515_oscillator_freq }},interrupt={{ mcp2515_int_pin }},cs2={{ mcp2515_cs2 }}"
+  notify: reboot
+
+- name: I2C kernel module needs to be loaded at boot time
+  lineinfile:
+    path: /etc/modules
+    line: "i2c-dev"
+    state: present
   notify: reboot
 
 - name: Setup a CAN device

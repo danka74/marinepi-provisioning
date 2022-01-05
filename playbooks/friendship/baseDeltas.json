@@ -15,11 +15,24 @@
             }
           },
           {
-            "path": "design.aisShipType",
+            "path": "design.draft",
             "value": {
-              "name": "Sailing",
-              "id": 36
+              "maximum": 1.7
             }
+          },
+          {
+            "path": "design.length",
+            "value": {
+              "overall": 9.5
+            }
+          },
+          {
+            "path": "design.beam",
+            "value": 3.27
+          },
+          {
+            "path": "design.airHeight",
+            "value": 15.4
           }
         ]
       }

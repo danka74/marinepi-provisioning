@@ -1,0 +1,3 @@
+---
+- name: restart-avnav-server
+  systemd: name=avnav.service state=restarted daemon_reload=yes

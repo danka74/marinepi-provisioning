@@ -8,7 +8,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=pi
-ExecStart=/usr/local/bin/sailor-hat-daemon --allowed-blackout-time {{ sailor_hat_allowed_blackout_time }}
+ExecStart=/usr/local/bin/sh-rpi-daemon --allowed-blackout-time {{ sailor_hat_allowed_blackout_time }}
 
 [Install]
 WantedBy=multi-user.target

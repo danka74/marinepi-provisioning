@@ -1,0 +1,14 @@
+[Unit]
+Description=AvNav Server
+Wants=network-online.target
+
+[Service]
+Type=exec
+Restart=always
+RestartSec=15s
+User={{ avnav_user }}
+Group={{ avnav_user_group }}
+ExecStart={{ path_to_avnav_server }} -q -b /home/{{ avnav_user }}/avnav -t /usr/lib/avnav/avnav_template.xml
+
+[Install]
+WantedBy=multi-user.target

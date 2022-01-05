@@ -1,4 +1,11 @@
 ---
+- name: Configure the kernel to signal the Sailor Hat on power off
+  lineinfile:
+    path: /boot/config.txt
+    line: "dtoverlay=gpio-poweroff,gpiopin=2,input,active_low=17"
+    state: present
+  notify: reboot
+
 - name: Install python setuptools
   apt:
     name: "{{ packages }}"
@@ -9,14 +16,22 @@
       - python3-dev
 
 - name: Download sailor-hat-daemon
-  git: repo=https://github.com/mairas/sailor-hat-daemon.git dest={{sailor_hat_directory}} clone=yes force=yes
+  git: repo=https://github.com/hatlabs/SH-RPi-daemon.git dest={{ sailor_hat_directory }} clone=yes force=yes
   become: no
   register: sailor_hat_sources
+
+- name: Install overlays
+  command: ./install_configs.sh
+  args:
+    creates: /boot/overlays/mcp2515-can2.dtbo
+    chdir: "{{ sailor_hat_directory }}/configs"
+  when: sailor_hat_sources.changed
+  notify: reboot
 
 - name: Install sailor-hat-daemon
   command: python3 setup.py install
   args:
-    chdir: "{{sailor_hat_directory}}"
+    chdir: "{{ sailor_hat_directory }}"
   when: sailor_hat_sources.changed
 
 - name: Setup the sailor-hat systemd service
