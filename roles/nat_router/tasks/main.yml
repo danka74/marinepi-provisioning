@@ -1,4 +1,4 @@
-# Copyright 2015-2016 Harri Kapanen <harri.kapanen@iki.fi>
+ # Copyright 2015-2016 Harri Kapanen <harri.kapanen@iki.fi>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -66,9 +66,9 @@
   when: nat_router_bridge_interfaces|join(" ") is search("wlan")
   notify: restart_hostapd
 
-- name: Disable DHCP client on local interface
-  lineinfile: dest=/etc/dhcpcd.conf regexp='^denyinterfaces .*' line='denyinterfaces {{ nat_router_local_interface }}'
-  notify: restart_dhcpcd
+# - name: Disable DHCP client on local interface
+#   lineinfile: dest=/etc/dhcpcd.conf regexp='^denyinterfaces .*' line='denyinterfaces {{ nat_router_local_interface }}'
+#   notify: restart_dhcpcd
 
 ##############################################################################
 # Routing and NATting

@@ -8,7 +8,7 @@ if [[ "$1" =~ ^(-h|-\?|--help)$ ]] ; then
   exit 1
 fi
 
-HOST=raspberrypi.local
+HOST=friendship.local
 if [ "$1" != "" ]; then
   HOST=$1
 fi
@@ -29,4 +29,4 @@ fi
 
 export ANSIBLE_HOST_KEY_CHECKING=false
 
-ansible-playbook -k -i $HOST, setup.yml -e "ssh_public_key=$PUBLIC_KEY" -e ansible_ssh_user=pi
+ansible-playbook -k -i $HOST, setup.yml -e "ssh_public_key=$PUBLIC_KEY" -e ansible_ssh_user=daniel

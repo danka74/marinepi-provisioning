@@ -13,10 +13,11 @@
 # limitations under the License.
 
 ---
-- hosts: all
-  remote_user: pi
-  gather_facts: yes
-  become: yes
+- name: Play for Friendship
+  hosts: all
+  remote_user: daniel
+  gather_facts: true
+  become: true
 
 # Configure vars and roles below to match your setup and environment
 # You can define 1...n wificlients by adding/removing lines
@@ -45,7 +46,7 @@
     #  examples see:
     #    https://github.com/SignalK/signalk-server-node/tree/master/settings
     #
-    #- signalk_settings_file: ./settings.json
+    - signalk_settings_file: ./settings.json
 
     - hotspot_ssid: Friendship
     - hotspot_passphrase: hipFriends#2020
@@ -71,21 +72,20 @@
       signalk_settings_file: settings.json
       signalk_security_file: security.json
       signalk_plugins:
-      - plugin_name: "@signalk/sailgauge"
-      - plugin_name: "set-system-time"
-        plugin_config_src: "set-system-time.json"
-        plugin_config_dst: "set-system-time.json"
-      - plugin_name: "signalk-to-nmea2000"
-        plugin_config_src: "sk-to-nmea2000.json"
-        plugin_config_dst: "sk-to-nmea2000.json"
-      - plugin_name: "https://github.com/danka74/signalk-raspberry-pi-bme280.git"
-        plugin_config_src: "signalk-raspberry-pi-bme280.json"
-        plugin_config_dst: "signalk-raspberry-pi-bme280.json"
-      - plugin_name: "signalk-raspberry-pi-monitoring"
-        plugin_config_src: "signalk-raspberry-pi-monitoring.json"
-        plugin_config_dst: "signalk-raspberry-pi-monitoring.json"
-    
-
+        - plugin_name: "@signalk/sailgauge"
+        - plugin_name: "set-system-time"
+          plugin_config_src: "set-system-time.json"
+          plugin_config_dst: "set-system-time.json"
+        - plugin_name: "signalk-to-nmea2000"
+          plugin_config_src: "sk-to-nmea2000.json"
+          plugin_config_dst: "sk-to-nmea2000.json"
+        - plugin_name: "https://github.com/danka74/signalk-raspberry-pi-bme280.git"
+          plugin_config_src: "signalk-raspberry-pi-bme280.json"
+          plugin_config_dst: "signalk-raspberry-pi-bme280.json"
+        - plugin_name: "signalk-raspberry-pi-monitoring"
+          plugin_config_src: "signalk-raspberry-pi-monitoring.json"
+          plugin_config_dst: "signalk-raspberry-pi-monitoring.json"
 
   handlers:
-    - include: ../../handlers/handlers.yml
+    - name: Import handlers
+      ansible.builtin.import_tasks: ../../handlers/handlers.yml

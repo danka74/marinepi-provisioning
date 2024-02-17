@@ -13,12 +13,14 @@
 # limitations under the License.
 
 ---
-- hosts: all
-  become: yes
+- name: Play for setting up
+  hosts: all
+  become: true
   user: "{{ ansible_ssh_user }}"
 
   handlers:
-    - include: handlers/handlers.yml
+    - name: Import handlers
+      ansible.builtin.import_tasks: handlers/handlers.yml
 
   vars:
     ssh_public_key: ~/.ssh/id_rsa.pub
@@ -26,23 +28,42 @@
   vars_prompt:
     - name: new_password
       prompt: "Enter new password"
-      private: yes
+      private: true
 
   tasks:
     - name: Create .ssh
-      file: state=directory dest=/home/{{ ansible_ssh_user }}/.ssh/ owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
+      ansible.builtin.file:
+        state: directory
+        dest: "/home/{{ ansible_ssh_user }}/.ssh/"
+        owner: "{{ ansible_ssh_user }}"
+        group: "{{ ansible_ssh_user }}"
+        mode: "0700"
+
 
     - name: Push SSH key to the Raspberry Pi
-      copy: src={{ ssh_public_key }} dest=/home/{{ ansible_ssh_user }}/.ssh/authorized_keys owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
+      ansible.builtin.copy:
+        src: "{{ ssh_public_key }}"
+        dest: "/home/{{ ansible_ssh_user }}/.ssh/authorized_keys"
+        owner: "{{ ansible_ssh_user }}"
+        group: "{{ ansible_ssh_user }}"
+        mode: "0600"
 
     - name: Change default user password
-      shell: echo {{ ansible_ssh_user }}:{{ new_password }} | sudo chpasswd
-      no_log: yes
+      ansible.builtin.user:
+        name: "{{ ansible_ssh_user }}"
+        password: "{{ new_password | password_hash('sha512') }}"
+        append: true
+        groups: adm, sudo
+      # no_log: true
 
     - name: Expand filesystem
-      shell: "raspi-config --expand-rootfs"
-      become: yes
+      ansible.builtin.command:
+        "raspi-config --expand-rootfs"
+      register: filesystem_expanded
+      changed_when: filesystem_expanded.rc != 0
+      become: true
       notify: reboot
 
     - name: Show IP Address
-      debug: var=hostvars[inventory_hostname]['ansible_default_ipv4']['address']
+      ansible.builtin.debug:
+        var: hostvars[inventory_hostname]['ansible_default_ipv4']['address']

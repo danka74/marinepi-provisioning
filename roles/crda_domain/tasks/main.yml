@@ -7,11 +7,11 @@
     packages:
     - wireless-regdb
     - iw
-    - crda
+  #  - crda
 
-- name: Set regulatory domain
-  lineinfile: dest=/etc/default/crda regexp="REGDOMAIN=.*" line="REGDOMAIN={{ crda_domain_code }}"
-  notify: reboot
+# - name: Set regulatory domain
+#   lineinfile: dest=/etc/default/crda regexp="REGDOMAIN=.*" line="REGDOMAIN={{ crda_domain_code }}"
+#   notify: reboot
 
 # Buster Lite (at least) seems to require contry code specified also in wpa_supplicant 
 # to persist unblocked wifi (rfkill) over reboots

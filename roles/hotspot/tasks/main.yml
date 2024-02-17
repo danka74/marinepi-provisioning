@@ -15,19 +15,27 @@
 ---
 ##############################################################################
 # Max USB power output
-- name: Switch USB to max power output
-  lineinfile: dest=/boot/config.txt line='max_usb_current=1'
-  notify: reboot
+# - name: Switch USB to max power output
+#   lineinfile: dest=/boot/config.txt line='max_usb_current=1'
+#   notify: reboot
 
 ##############################################################################
 # Install and configure hostapd
 
 - name: Install hostapd
-  apt: pkg=hostapd state=latest
+  apt: 
+    pkg:
+      - hostapd
+      - udhcpd
+      - iptables-persistent
+    state: latest
   notify: reboot
 
 - name: Copy hostapd.conf over
-  template: src=hostapd_conf.j2 dest=/etc/hostapd/hostapd.conf mode=0644
+  template: 
+    src: hostapd_conf.j2 
+    dest: /etc/hostapd/hostapd.conf 
+    mode: 0644
   notify: restart_hostapd
 
 - name: Point hostapd at the config file
