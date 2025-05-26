@@ -23,14 +23,14 @@
 # You can define 1...n wificlients by adding/removing lines
 
   vars:
-    - hostname: friendship
+    hostname: friendship
 
     # timezone - server timezone  (optional)
     #
     #  defaults to Etc/UTC. Uncomment to override. for valid values, see:
     #    https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
     #
-    - timezone: Europe/Stockholm
+    timezone: Europe/Stockholm
 
     # SignalK node server git branch (optional)
     #
@@ -38,7 +38,7 @@
     #  Other interesting options would be 'master', referring to the
     #  latest development version, or (say) 'v1.9.1', referring to a
     #  specific released version.
-    - signalk_server_git_branch: latest
+    signalk_server_git_branch: latest
 
     # signalk_settings_file - config file for server (optional)
     #
@@ -46,10 +46,10 @@
     #  examples see:
     #    https://github.com/SignalK/signalk-server-node/tree/master/settings
     #
-    - signalk_settings_file: ./settings.json
+    signalk_settings_file: ./settings.json
 
-    - hotspot_ssid: Friendship
-    - hotspot_passphrase: hipFriends#2020
+    hotspot_ssid: Friendship
+    hotspot_passphrase: hipFriends#2020
 
   roles:
     - common
@@ -73,7 +73,7 @@
       signalk_security_file: security.json
       signalk_plugins:
         - plugin_name: "@signalk/sailgauge"
-        - plugin_name: "set-system-time"
+        - plugin_name: "@signalk/set-system-time"
           plugin_config_src: "set-system-time.json"
           plugin_config_dst: "set-system-time.json"
         - plugin_name: "signalk-to-nmea2000"

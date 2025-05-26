@@ -110,8 +110,8 @@
     tags: signalk-npm
 
   - name: "Install SignalK server plugins"
-    include:
-      file: install_plugin.yml
+    include_tasks: install_plugin.yml
+    vars:
       plugin_name: "{{ item.plugin_name | default(item) }}"
       plugin_config_src: "{{ item.plugin_config_src | default('') }}"
       plugin_config_dst: "{{ item.plugin_config_dst | default('') }}"
